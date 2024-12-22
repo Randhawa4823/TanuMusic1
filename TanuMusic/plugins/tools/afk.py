@@ -167,7 +167,7 @@ async def active_afk(_, message: Message):
 chat_watcher_group = 1
 
 
-from pyrogram.types import MessageEntity, MessageEntityType
+from pyrogram.types import MessageEntity
 
 @app.on_message(
     ~filters.me & ~filters.bot & ~filters.via_bot,
@@ -188,7 +188,7 @@ async def chat_watcher_func(_, message):
         possible = ["/afk", f"/afk@{BOT_USERNAME}"]
         message_text = message.text or message.caption
         for entity in message.entities:
-            if entity.type == MessageEntityType.BOT_COMMAND:  # Using MessageEntityType properly
+            if entity.type == "bot_command":  # Compare directly to "bot_command"
                 if (message_text[0 : 0 + entity.length]).lower() in possible:
                     return
 
