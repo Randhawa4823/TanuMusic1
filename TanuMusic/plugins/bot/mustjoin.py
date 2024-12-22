@@ -12,7 +12,7 @@ IMAGE = [
     "https://graph.org/file/84e84ff778b045879d24f.jpg",
     "https://graph.org/file/a4a8f0e5c0e6b18249ffc.jpg",
     "https://graph.org/file/ed92cada78099c9c3a4f7.jpg",
-    "https://graph.org/file/d6360613d0fa7a9d2f90b.jpg"
+    "https://graph.org/file/d6360613d0fa7a9d2f90b.jpg",
     "https://graph.org/file/37248e7bdff70c662a702.jpg",
     "https://graph.org/file/0bfe29d15e918917d1305.jpg",
     "https://graph.org/file/16b1a2828cc507f8048bd.jpg",
