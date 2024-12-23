@@ -1,5 +1,5 @@
+import random
 from typing import Union
-import random 
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
 
@@ -10,22 +10,7 @@ from TanuMusic.utils.decorators.language import LanguageStart, languageCB
 from TanuMusic.utils.inline.help import help_back_markup, private_help_panel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
-
-AVISHA = [
-"https://graph.org/file/eaa3a2602e43844a488a5.jpg",
-"https://graph.org/file/b129e98b6e5c4db81c15f.jpg",
-"https://graph.org/file/3ccb86d7d62e8ee0a2e8b.jpg",
-"https://graph.org/file/df11d8257613418142063.jpg",
-"https://graph.org/file/9e23720fedc47259b6195.jpg",
-"https://graph.org/file/826485f2d7db6f09db8ed.jpg",
-"https://graph.org/file/ff3ad786da825b5205691.jpg",
-"https://graph.org/file/52713c9fe9253ae668f13.jpg",
-"https://graph.org/file/8f8516c86677a8c91bfb1.jpg",
-"https://graph.org/file/6603c3740378d3f7187da.jpg",
-"https://graph.org/file/66cb6ec40eea5c4670118.jpg",
-"https://graph.org/file/2e3cf4327b169b981055e.jpg",
-
-]
+from strings.image import Photos
 
 
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
@@ -37,7 +22,7 @@ async def helper_private(
     if is_callback:
         try:
             await update.answer()
-        except:
+        except Exception:
             pass
         chat_id = update.message.chat.id
         language = await get_lang(chat_id)
@@ -49,13 +34,13 @@ async def helper_private(
     else:
         try:
             await update.delete()
-        except:
+        except Exception:
             pass
         language = await get_lang(update.chat.id)
         _ = get_string(language)
         keyboard = help_pannel(_)
         await update.reply_photo(
-            random.choice(AVISHA),
+            random.choice(Photos),  # Randomly select an image
             caption=_["help_1"].format(SUPPORT_CHAT),
             reply_markup=keyboard,
         )
