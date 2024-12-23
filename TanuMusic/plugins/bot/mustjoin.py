@@ -23,7 +23,7 @@ async def must_join_channel(app: Client, msg: Message):
             try:
                 await msg.reply_photo(
                     random.choice(Photos),  # Select a random Photos from the imported list
-                    caption=f"<pre>❖ ʜᴇʏ ᴛʜᴇʀᴇ, ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ᴜʜʜ !</pre>\n\n"
+                    caption=f"<pre>❖ ʜᴇʏ ᴛʜᴇʀᴇ, ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ᴜʜʜ.</pre>\n\n"
                             f"<pre>● ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ  ˹ ᴛᴀɴᴜ ꭙ ᴍᴜsɪᴄ™ ♡゙, ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴀɴᴅ ʏᴏᴜ ᴊᴏɪɴᴇᴅ, ᴛʜᴇɴ ʏᴏᴜ ᴄᴀɴ ᴜsᴇ ᴀʟʟ ᴍʏ ᴄᴏᴍᴍᴀɴᴅs.</pre>",
                     reply_markup=InlineKeyboardMarkup(
                         [
