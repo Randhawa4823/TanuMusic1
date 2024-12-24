@@ -1,9 +1,7 @@
-import random
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from TanuMusic import app
 from config import LOGGER_ID
-from strings.image import Photos
 
 @app.on_message(filters.new_chat_members, group=2)
 async def join_watcher(_, message):    
@@ -21,10 +19,9 @@ async def join_watcher(_, message):
                 f"● ɢʀᴏᴜᴘ ᴍᴇᴍʙᴇʀs ➥ {count}\n\n"
                 f"❖ ᴀᴅᴅᴇᴅ ʙʏ ➥ {message.from_user.mention}"
             )
-            await app.send_photo(
+            await app.send_message(
                 LOGGER_ID,
-                photo=random.choice(Photos),
-                caption=msg,
+                text=msg,
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton(f"sᴇᴇ ʙᴏᴛ ᴀᴅᴅᴇᴅ ɢʀᴏᴜᴘ", url=f"{link}")]
                 ])
@@ -44,10 +41,9 @@ async def on_left_chat_member(_, message: Message):
             f"● ʙᴏᴛ ʀᴇᴍᴏᴠᴇᴅ ʙʏ ➥ {remove_by}\n\n"
             f"❖ ʙᴏᴛ ɴᴀᴍᴇ ➥ ˹ ᴍᴀʜᴀᴋ ꭙ ʀᴏʙᴏᴛ™ ♡゙"
         )
-        await app.send_photo(
+        await app.send_message(
             LOGGER_ID,
-            photo=random.choice(Photos),
-            caption=left,
+            text=left,
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton(f"ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"https://t.me/{app.username}?startgroup=true")]
             ])
