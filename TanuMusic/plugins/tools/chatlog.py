@@ -1,5 +1,5 @@
 import random
-from pyrogram import Client
+from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from TanuMusic import app
 from config import LOGGER_ID
