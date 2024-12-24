@@ -76,11 +76,15 @@ async def google_img_search(client: Client, message: Message):
 
     try:
         # Send images as a media group
-        await app.send_media_group(
-            chat_id=chat_id,
-            media=[InputMediaPhoto(media=img) for img in downloaded_images],
-            reply_to_message_id=message.id
-        )
+        media_group = [InputMediaPhoto(media=img) for img in downloaded_images]
+
+        # Check if we have images and send
+        if media_group:
+            await app.send_media_group(
+                chat_id=chat_id,
+                media=media_group,
+                reply_to_message_id=message.id
+            )
 
         # Cleanup the downloaded images after sending
         for img in downloaded_images:
