@@ -39,7 +39,7 @@ async def on_left_chat_member(_, message: Message):
             f"● ɢʀᴏᴜᴘ ɴᴀᴍᴇ ➥ {title}\n\n"
             f"● ɢʀᴏᴜᴘ ɪᴅ ➥ {chat_id}\n\n"
             f"● ʙᴏᴛ ʀᴇᴍᴏᴠᴇᴅ ʙʏ ➥ {remove_by}\n\n"
-            f"❖ ʙᴏᴛ ɴᴀᴍᴇ ➥ ˹ ᴍᴀʜᴀᴋ ꭙ ʀᴏʙᴏᴛ™ ♡゙"
+            f"❖ ʙᴏᴛ ɴᴀᴍᴇ ➥ ˹ ᴛᴀɴᴜ ꭙ ᴍᴜsɪᴄ™ ♡゙"
         )
         await app.send_message(
             LOGGER_ID,
