@@ -10,17 +10,50 @@ from uuid import uuid4
 from pyrogram.types import InlineKeyboardButton,InlineKeyboardMarkup
 
 
-EVAA = [
+BUTTONS = [
     [
         InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"https://t.me/TanuMusicxBot?startgroup=true"),
     ],
 ]
 
+@app.on_message(filters.reply & filters.command("upscale"))
+async def upscale_image(client, message):
+    try:
+        if not message.reply_to_message or not message.reply_to_message.photo:
+            await message.reply_text("✦ ᴘʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ɪᴛ.")
+            return
+
+        image = message.reply_to_message.photo.file_id
+        file_path = await client.download_media(image)
+
+        with open(file_path, "rb") as image_file:
+            f = image_file.read()
+
+        b = base64.b64encode(f).decode("utf-8")
+
+        async with httpx.AsyncClient() as http_client:
+            response = await http_client.post(
+                "https://api.qewertyy.me/upscale", data={"image_data": b}, timeout=None
+            )
+
+        with open("upscaled_image.png", "wb") as output_file:
+            output_file.write(response.content)
+
+        await client.send_document(
+            message.chat.id,
+            document="upscaled_image.png",
+            caption="๏ ʜᴇʀᴇ ɪs ᴛʜᴇ ᴜᴘsᴄᴀʟᴇᴅ ɪᴍᴀɢᴇ !",
+        )
+
+    except Exception as e:
+        print(f"✦ ғᴀɪʟᴇᴅ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ᴛʜᴇ ɪᴍᴀɢᴇ: {e}")
+        await message.reply_text("✦ ғᴀɪʟᴇᴅ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ᴛʜᴇ ɪᴍᴀɢᴇ. ᴘʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ ʟᴀᴛᴇʀ.")
+
 ######### sticker id
 
 @app.on_message(filters.command("kang"))
 async def _packkang(app :app,message):  
-    txt = await message.reply_text("<b>✦ ᴘʀᴏᴄᴇssɪɴɢ.... </b>")
+    txt = await message.reply_text("✦ ᴘʀᴏᴄᴇssɪɴɢ....")
     if not message.reply_to_message:
         await txt.edit('ʀᴇᴘʟʏ ᴛᴏ ᴍᴇssᴀɢᴇ')
         return
@@ -41,14 +74,14 @@ async def _packkang(app :app,message):
             hash=0))
     shits = stickers.documents
     sticks = []
-    
+
     for i in shits:
         sex = pyrogram.raw.types.InputDocument(
                 id=i.id,
                 access_hash=i.access_hash,
                 file_reference=i.thumbs[0].bytes
             )
-        
+
         sticks.append(
             pyrogram.raw.types.InputStickerSetItem(
                 document=sex,
@@ -84,7 +117,5 @@ async def sticker_id(app: app, msg):
 ❖ sᴛɪᴄᴋᴇʀ ɪɴғᴏ ❖
 
 ● sᴛɪᴄᴋᴇʀ ɪᴅ ➥ {st_in.file_id}\n
-● sᴛɪᴄᴋᴇʀ ᴜɴɪǫᴜᴇ ɪᴅ ➥ {st_in.file_unique_id}""", reply_markup=InlineKeyboardMarkup(EVAA),)
+● sᴛɪᴄᴋᴇʀ ᴜɴɪǫᴜᴇ ɪᴅ ➥ {st_in.file_unique_id}""", reply_markup=InlineKeyboardMarkup(BUTTONS),)
 
-
-#####
