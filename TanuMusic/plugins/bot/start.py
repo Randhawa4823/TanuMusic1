@@ -28,7 +28,14 @@ from strings import get_string
 
 # Start command in private chat
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
-async def start_pm(client, message: Message, _):
+async def start_pm(client, message: Message):
+    try:
+        language = await get_lang(message.chat.id)
+        _ = get_string(language)
+    except Exception as ex:
+        print(f"Error loading language: {ex}")
+        _ = lambda x: x  # Fallback to identity function
+
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
@@ -93,7 +100,6 @@ async def start_pm(client, message: Message, _):
                 reply_markup=InlineKeyboardMarkup(out),
             )
         except pyrogram.errors.exceptions.forbidden_403.ChatSendPhotosForbidden:
-            # Fallback to text message if photo cannot be sent
             await message.reply_text(
                 _["start_2"].format(message.from_user.mention, app.mention),
                 reply_markup=InlineKeyboardMarkup(out),
@@ -117,7 +123,6 @@ async def start_gp(client, message: Message, _):
             reply_markup=InlineKeyboardMarkup(out),
         )
     except pyrogram.errors.exceptions.forbidden_403.ChatSendPhotosForbidden:
-        # Fallback to text message if photo cannot be sent
         await message.reply_text(
             _["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
@@ -164,7 +169,6 @@ async def welcome(client, message: Message):
                         reply_markup=InlineKeyboardMarkup(out),
                     )
                 except pyrogram.errors.exceptions.forbidden_403.ChatSendPhotosForbidden:
-                    # Fallback to text message if photo cannot be sent
                     await message.reply_text(
                         _["start_3"].format(
                             message.from_user.first_name,
@@ -177,4 +181,4 @@ async def welcome(client, message: Message):
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
         except Exception as ex:
-            print(ex)
+            print(f"Error in welcome: {ex}")
