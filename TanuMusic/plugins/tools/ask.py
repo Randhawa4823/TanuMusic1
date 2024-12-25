@@ -11,7 +11,7 @@ g4f_client = G4FClient()
 async def ask_command(client, message):
     command_args = message.command[1:]  # Get the text after the command
     if not command_args:
-        await message.reply_text("ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ǫᴜᴇsᴛɪᴏɴ.", parse_mode="html")  # Use "html" as parse mode
+        await message.reply_text("ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ǫᴜᴇsᴛɪᴏɴ.", parse_mode="markdown")  # Use "markdown" as parse mode
         return
 
     # Show "typing..." action
@@ -51,7 +51,7 @@ async def ask_command(client, message):
 
         # Extract and send the response
         answer = response['choices'][0]['message']['content']
-        await message.reply_text(answer, parse_mode="html")  # Use "html" as parse mode
+        await message.reply_text(answer, parse_mode="markdown")  # Use "markdown" as parse mode
 
     except Exception as e:
-        await message.reply_text(f"An error occurred: {e}", parse_mode="html")  # Use "html" as parse mode
+        await message.reply_text(f"An error occurred: {e}", parse_mode="markdown")  # Use "markdown" as parse mode
