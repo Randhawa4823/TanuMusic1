@@ -28,7 +28,7 @@ async def ask_command(client, message):
     try:
         # Query the G4F API with a system prompt
         response = g4f_client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_query}
