@@ -29,14 +29,11 @@ from strings import get_string
 # Start command in private chat
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 async def start_pm(client, message: Message):
-    try:
-        language = await get_lang(message.chat.id)
-        _ = get_string(language)
-    except Exception as ex:
-        print(f"Error loading language: {ex}")
-        _ = lambda x: x  # Fallback to identity function
-
     await add_served_user(message.from_user.id)
+
+    # Define `_` to avoid the error
+    _ = get_string("en")  # Replace "en" with the default language code
+
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
@@ -100,6 +97,7 @@ async def start_pm(client, message: Message):
                 reply_markup=InlineKeyboardMarkup(out),
             )
         except pyrogram.errors.exceptions.forbidden_403.ChatSendPhotosForbidden:
+            # Fallback to text message if photo cannot be sent
             await message.reply_text(
                 _["start_2"].format(message.from_user.mention, app.mention),
                 reply_markup=InlineKeyboardMarkup(out),
@@ -107,8 +105,9 @@ async def start_pm(client, message: Message):
         if await is_on_off(2):
             return await app.send_message(
                 chat_id=config.LOGGER_ID,
-                text=f"❖ {message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>● ᴜsᴇʀ ɪᴅ ➥</b> <code>{message.from_user.id}</code>\n<b>● ᴜsᴇʀɴᴀᴍᴇ ➥</b> @{message.from_user.username}",               
+                text=f"❖ {message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>● ᴜsᴇʀ ɪᴅ ➥</b> <code>{message.from_user.id}</code>\n<b>● ᴜsᴇʀɴᴀᴍᴇ ➥</b> @{message.from_user.username}",
             )
+
 
 # Start command in group chats
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
@@ -123,11 +122,13 @@ async def start_gp(client, message: Message, _):
             reply_markup=InlineKeyboardMarkup(out),
         )
     except pyrogram.errors.exceptions.forbidden_403.ChatSendPhotosForbidden:
+        # Fallback to text message if photo cannot be sent
         await message.reply_text(
             _["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
         )
     return await add_served_chat(message.chat.id)
+
 
 # Welcome new chat members
 @app.on_message(filters.new_chat_members, group=-1)
@@ -169,6 +170,7 @@ async def welcome(client, message: Message):
                         reply_markup=InlineKeyboardMarkup(out),
                     )
                 except pyrogram.errors.exceptions.forbidden_403.ChatSendPhotosForbidden:
+                    # Fallback to text message if photo cannot be sent
                     await message.reply_text(
                         _["start_3"].format(
                             message.from_user.first_name,
@@ -181,4 +183,4 @@ async def welcome(client, message: Message):
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
         except Exception as ex:
-            print(f"Error in welcome: {ex}")
+            print(ex)
