@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 from TanuMusic import app
 from TanuMusic.utils import help_pannel
 from TanuMusic.utils.database import get_lang
-from TanuMusic.utils.decorators.language import LanguageStart, languageCB
+from TanuMusic.utils.decorators.language import LanguageStart
 from TanuMusic.utils.inline.help import help_back_markup, private_help_panel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
@@ -54,7 +54,6 @@ async def help_com_group(client, message: Message, _):
 
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
-@languageCB
 async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
