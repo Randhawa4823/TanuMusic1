@@ -54,7 +54,6 @@ async def help_com_group(client, message: Message, _):
 
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
-@languageCB
 async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
