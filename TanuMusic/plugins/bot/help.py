@@ -1,17 +1,16 @@
-import random
 from typing import Union
+import random 
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 from TanuMusic import app
 from TanuMusic.utils import help_pannel
 from TanuMusic.utils.database import get_lang
-from TanuMusic.utils.decorators.language import LanguageStart
+from TanuMusic.utils.decorators.language import LanguageStart, languageCB
 from TanuMusic.utils.inline.help import help_back_markup, private_help_panel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
 from strings.image import Photos
-
 
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
@@ -22,7 +21,7 @@ async def helper_private(
     if is_callback:
         try:
             await update.answer()
-        except Exception:
+        except:
             pass
         chat_id = update.message.chat.id
         language = await get_lang(chat_id)
@@ -34,13 +33,13 @@ async def helper_private(
     else:
         try:
             await update.delete()
-        except Exception:
+        except:
             pass
         language = await get_lang(update.chat.id)
         _ = get_string(language)
         keyboard = help_pannel(_)
         await update.reply_photo(
-            random.choice(Photos),  # Randomly select an image
+            random.choice(Photos),
             caption=_["help_1"].format(SUPPORT_CHAT),
             reply_markup=keyboard,
         )
@@ -54,6 +53,7 @@ async def help_com_group(client, message: Message, _):
 
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
+@languageCB
 async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
