@@ -7,7 +7,10 @@ from TanuMusic import app
 async def fetch_med_info(client, message):
     query = " ".join(message.command[1:])  # Extract the query after the command
     if not query:
-        await message.reply_text("Please provide a query to ask.")
+        await message.reply_text(
+            "*Error:* Please provide a query to ask.", 
+            parse_mode="markdown"
+        )
         return
 
     # Send typing action to indicate bot is working
@@ -21,10 +24,11 @@ async def fetch_med_info(client, message):
                 if response.status == 200:
                     data = await response.json()
                     reply = data.get("data", "Sorry, I couldn't fetch the data.")
+                    formatted_reply = f"*Success:* {reply}"
                 else:
-                    reply = "Failed to fetch data from the API."
+                    formatted_reply = "*Error:* Failed to fetch data from the API."
     except Exception as e:
-        reply = f"An error occurred: {e}"
+        formatted_reply = f"*Error:* An error occurred: `{e}`"
 
     # Reply to the user
-    await message.reply_text(reply)
+    await message.reply_text(formatted_reply, parse_mode="markdown")
