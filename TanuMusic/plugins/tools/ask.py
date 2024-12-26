@@ -1,6 +1,6 @@
 import aiohttp
 from pyrogram import Client, filters
-from pyrogram.types import ChatAction
+from pyrogram.enums import ChatAction
 from TanuMusic import app 
 
 @app.on_message(filters.command("ask") & filters.group)
