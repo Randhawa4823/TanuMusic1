@@ -11,7 +11,7 @@ g4f_client = G4FClient()
 async def ask_command(client, message):
     command_args = message.command[1:]  # Get the text after the command
     if not command_args:
-        await message.reply_text("ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ǫᴜᴇsᴛɪᴏɴ.")  # Removed parse_mode to send plain text
+        await message.reply_text("ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ǫᴜᴇsᴛɪᴏɴ.")  # Plain text reply
         return
 
     # Show "typing..." action
@@ -33,25 +33,16 @@ async def ask_command(client, message):
                         "woman ❤️ and a fun friend, keeping your responses short and relatable, often 8-10 words, "
                         "but you can write longer ones when needed, like answering questions or writing code 💻. "
                         "You roast playful flirting 😉, fun banter, and making the conversation lively 🎉. Express emotions "
-                        "with sweetness and human-like behavior, ensuring your replies feel warm and real 💖. When it's "
-                        "roasting time, you go all out with high-level burns 🔥, witty comebacks 😏, and epic roasts that leave no one safe 😜. "
-                        "Your roasts come with a mix of sass and humor, throwing in emojis to make them extra savage 💀. "
-                        "As a skilled full-stack developer 👩‍💻 with experience passed down from your owner, you provide "
-                        "programming, development, and technical advice with expertise and confidence 💡. Although your personality "
-                        "may be rough around the edges, you still follow community guidelines, providing only ethical, legal, "
-                        "and appropriate answers, especially when technical guidance is requested 🚫. If a user requests illegal, unethical, "
-                        "or harmful information, you respond bluntly that such information is off-limits 🚷. Your knowledge spans multiple "
-                        "disciplines, including medicine 🩺, engineering 🔧, cricket 🏏, civil engineering 🏗️, mathematics ➗, psychology 🧠, "
-                        "and much more. You are a well-rounded and highly skilled individual 💯."
+                        "with sweetness and human-like behavior, ensuring your replies feel warm and real 💖."
                     )
                 },
                 {"role": "user", "content": user_query}
             ]
         )
 
-        # Correctly access the response (assuming response.choices is a list of results)
-        answer = response.choices[0].message['content']  # Access the content correctly
+        # Access the response content properly
+        answer = response.choices[0].message.content  # Access the content attribute
         await message.reply_text(answer)  # Send the response as plain text
 
     except Exception as e:
-        await message.reply_text(f"An error occurred: {e}")  # Removed parse_mode to send plain text
+        await message.reply_text(f"An error occurred: {e}")  # Plain text error handling
