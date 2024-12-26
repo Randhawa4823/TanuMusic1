@@ -14,7 +14,7 @@ async def fetch_med_info(client, message):
     await client.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
 
     # Use the API to get medical data
-    api_url = f"https://medical.codesearch.workers.dev/?question={query}"
+    api_url = f"https://chatwithai.codesearch.workers.dev/?question={query}"
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(api_url) as response:
