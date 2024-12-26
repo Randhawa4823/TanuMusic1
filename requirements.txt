@@ -1,7 +1,5 @@
 g4f
 deep-translator
-pyrogram
-openai
 aiofiles
 aiohttp
 asyncio
